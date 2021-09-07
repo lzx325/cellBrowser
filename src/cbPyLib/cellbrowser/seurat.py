@@ -468,9 +468,10 @@ def readExportScript(cmds):
 
 def writeRScript(cmds, scriptPath, madeBy):
     " write list of R commands to script, prefix with a header "
+    import getpass
     ofh = open(scriptPath, "w")
     ofh.write("# generated R code by: cellbrowser %s, %s, username: %s\n" %
-            (madeBy, datetime.datetime.now().strftime("%I:%M%p %B %d, %Y"), os.getlogin()))
+            (madeBy, datetime.datetime.now().strftime("%I:%M%p %B %d, %Y"), getpass.getuser()))
     for c in cmds:
         ofh.write(c)
         ofh.write("\n")
