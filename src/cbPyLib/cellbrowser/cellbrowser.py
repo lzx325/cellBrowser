@@ -2715,8 +2715,8 @@ def parseMarkerTable(filename, geneToSym):
     newHeaders = ["id", "symbol", headers[scoreIdx]+"|float"]
     newHeaders.extend(otherHeadersWithType)
 
-    if len(data) > 300:
-        errAbort("Your marker file has more than 300 clusters. Are you sure that this is correct? The input format is (clusterName, geneSymName, Score), is it possible that you have inversed the order of cluster and gene?")
+    if len(data) > 1000:
+        errAbort("Your marker file has more than 1000 clusters. Are you sure that this is correct? The input format is (clusterName, geneSymName, Score), is it possible that you have inversed the order of cluster and gene?")
 
     # determine if the score field is most likely a p-value, needed for sorting
     revSort = True
@@ -3752,6 +3752,9 @@ def matrixOrSamplesHaveChanged(datasetDir, inMatrixFname, outMatrixFname, outCon
     origSize = oldMatrixInfo ["size"]
     nowSize = getsize(inMatrixFname)
 
+    if not "fileVersions" in outConf:
+        outConf["fileVersions"] = {}
+
     # mtx has three files, so have to add their sizes to the total now
     if isMtx(inMatrixFname) and "barcodes" in lastConf["fileVersions"]:
         oldBarInfo = lastConf["fileVersions"]["barcodes"]
@@ -3770,9 +3773,6 @@ def matrixOrSamplesHaveChanged(datasetDir, inMatrixFname, outMatrixFname, outCon
             "processed matrix. Expression matrix must be reindexed. Old file(s): %s, current file: %d" %
             (oldMatrixInfo, nowSize))
         return True
-
-    if not "fileVersions" in outConf:
-        outConf["fileVersions"] = {}
 
     outConf["fileVersions"]["inMatrix"] = oldMatrixInfo
     outConf["fileVersions"]["outMatrix"] = lastConf["fileVersions"]["outMatrix"]
