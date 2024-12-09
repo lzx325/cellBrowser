@@ -4782,9 +4782,9 @@ def cbBuildCli():
             build(confFnames, outDir, port, redo=options.redo)
     except:
         exc_info = sys.exc_info()
-        logging.error("Unexpected error: %s" % exc_info)
         import traceback
         traceback.print_exception(*exc_info)
+        logging.error("Unexpected error: %s" % exc_info)
         sys.exit(1)
 
 def readMatrixAnndata(matrixFname, samplesOnRows=False, genome="hg38"):
